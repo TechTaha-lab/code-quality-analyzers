@@ -1,0 +1,18 @@
+{
+  "compilerOptions": {
+    "target": "ES2020",
+    "module": "Node16",
+    "declaration": true,
+    "outDir": "./packages",
+    "rootDir": "packages",
+    "strict": true,
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "moduleResolution": "node16",
+    "resolveJsonModule": true,
+    "types": ["node"],
+    "sourceMap": true
+  },
+  "include": ["packages/**/*"],
+  "exclude": ["node_modules", "dist", "code-quality-report"]
+}

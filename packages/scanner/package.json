@@ -1,0 +1,19 @@
+{
+  "name": "@code-quality/scanner",
+  "version": "0.1.0",
+  "description": "File scanning utilities for code quality analysis.",
+  "main": "src/index.js",
+  "types": "src/index.d.ts",
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "tsc -p ../../tsconfig.json"
+  },
+  "dependencies": {
+    "fast-glob": "^3.2.12"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}

@@ -1,0 +1,23 @@
+{
+  "name": "@code-quality/core",
+  "version": "0.1.0",
+  "description": "Core analysis engine for code quality scanning and reporting.",
+  "main": "src/index.js",
+  "types": "src/index.d.ts",
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "tsc -p ../../tsconfig.json"
+  },
+  "dependencies": {
+    "fs-extra": "^11.1.1",
+    "ora": "^6.1.2",
+    "chalk": "^5.3.0",
+    "open": "^9.0.0",
+    "fast-glob": "^3.2.12"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}

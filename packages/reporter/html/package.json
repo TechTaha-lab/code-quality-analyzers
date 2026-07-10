@@ -1,0 +1,11 @@
+{
+  "name": "@code-quality/reporter-html",
+  "version": "0.1.0",
+  "description": "Static HTML reporter assets for generated code quality reports.",
+  "files": [
+    "static"
+  ],
+  "publishConfig": {
+    "access": "public"
+  }
+}

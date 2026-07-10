@@ -1,0 +1,61 @@
+{
+  "name": "code-quality-analyzers",
+  "version": "0.1.0",
+  "description": "Modular CLI and library for scanning, parsing, and reporting code quality issues.",
+  "keywords": [
+    "code-quality",
+    "static-analysis",
+    "typescript",
+    "cli",
+    "reporting"
+  ],
+  "author": "Taha Kourani",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/taha-kourani/code-quality-analyzers.git"
+  },
+  "homepage": "https://github.com/taha-kourani/code-quality-analyzers#readme",
+  "bugs": {
+    "url": "https://github.com/taha-kourani/code-quality-analyzers/issues"
+  },
+  "license": "MIT",
+  "type": "commonjs",
+  "main": "packages/cli/src/index.js",
+  "types": "packages/cli/src/index.d.ts",
+  "bin": {
+    "code-quality-analyzer": "packages/cli/src/index.js"
+  },
+  "files": [
+    "packages/cli/src",
+    "packages/core/src",
+    "packages/parser/src",
+    "packages/rule-engine/src",
+    "packages/scanner/src",
+    "packages/examples/sample-project/src",
+    "README.md",
+    "LICENSE",
+    "CHANGELOG.md"
+  ],
+  "engines": {
+    "node": ">=18"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "workspaces": [
+    "packages/*"
+  ],
+  "scripts": {
+    "build": "npx tsc -p tsconfig.json",
+    "build:all": "npm run build",
+    "analyze": "node packages/cli/dist/index.js analyze . --output ./code-quality-report",
+    "run-sample": "node scripts/run-sample.js",
+    "test": "node scripts/run-sample.js",
+    "lint": "echo \"No linter configured yet\"",
+    "publish:all": "node scripts/publish-all.js"
+  },
+  "devDependencies": {
+    "@types/node": "^26.1.1",
+    "typescript": "^7.0.2"
+  }
+}
