@@ -8,6 +8,18 @@ Installed CLI:
 cqa analyze
 ```
 
+On Windows, if `cqa analyze` does not work because PowerShell cannot find `cqa`, run this first:
+
+```powershell
+$env:Path += ";$env:APPDATA\npm"
+```
+
+Then run:
+
+```powershell
+cqa analyze
+```
+
 Short alias:
 
 ```bash

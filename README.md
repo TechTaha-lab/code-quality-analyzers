@@ -20,13 +20,13 @@ The long command still works:
 code-quality-analyzer analyze . --output ./code-quality-report
 ```
 
-On Windows, if PowerShell cannot find global npm commands in the current terminal, add npm's global bin folder for that session:
+On Windows, if `cqa analyze` does not work because PowerShell cannot find `cqa`, run this first:
 
 ```powershell
 $env:Path += ";$env:APPDATA\npm"
 ```
 
-Then run the short command:
+Then run:
 
 ```powershell
 cqa analyze
