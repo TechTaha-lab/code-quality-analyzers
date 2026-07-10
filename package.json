@@ -12,11 +12,11 @@
   "author": "Taha Kourani",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/taha-kourani/code-quality-analyzers.git"
+    "url": "git+https://github.com/TechTaha-lab/code-quality-analyzers.git"
   },
-  "homepage": "https://github.com/taha-kourani/code-quality-analyzers#readme",
+  "homepage": "https://github.com/TechTaha-lab/code-quality-analyzers#readme",
   "bugs": {
-    "url": "https://github.com/taha-kourani/code-quality-analyzers/issues"
+    "url": "https://github.com/TechTaha-lab/code-quality-analyzers/issues"
   },
   "license": "MIT",
   "type": "commonjs",
