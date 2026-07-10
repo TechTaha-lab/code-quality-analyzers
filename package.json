@@ -53,6 +53,7 @@
     "build:all": "npm run build",
     "analyze": "node packages/cli/src/index.js analyze . --output ./code-quality-report --no-open",
     "run-sample": "node scripts/run-sample.js",
+    "dev:test-area": "node scripts/dev-testing-area.js",
     "test": "node scripts/run-sample.js",
     "lint": "echo \"No linter configured yet\"",
     "publish:all": "node scripts/publish-all.js"

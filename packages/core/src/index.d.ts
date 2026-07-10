@@ -8,5 +8,6 @@ export declare function analyzeProject(opts?: AnalyzeOptions): Promise<{
     success: boolean;
     reportDir: any;
     findings: any;
-    filesScanned: number;
+    filesScanned: any;
+    filesAnalyzed: number;
 }>;

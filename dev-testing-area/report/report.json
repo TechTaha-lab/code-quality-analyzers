@@ -1,0 +1,16 @@
+{
+  "summary": {
+    "filesScanned": 2,
+    "filesAnalyzed": 0,
+    "timeMs": 20,
+    "generatedAt": "2026-07-10T09:12:32.909Z",
+    "findings": 0,
+    "errors": 0,
+    "warnings": 0,
+    "infos": 0,
+    "score": 100,
+    "rating": "Excellent"
+  },
+  "files": [],
+  "findings": []
+}

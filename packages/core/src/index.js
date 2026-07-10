@@ -69,6 +69,7 @@ async function analyzeProject(opts = {}) {
     const files = await scan({ root, ignore: opts.ignore });
     console.log(`Found ${files.length} files`);
     const results = [];
+    const parsedForRules = [];
     console.log('Parsing files...');
     for (const file of files) {
         const parsed = await parseFile(file);
@@ -76,15 +77,10 @@ async function analyzeProject(opts = {}) {
             continue;
         const metrics = computeMetrics(parsed.code);
         results.push({ file: file, language: parsed.language, metrics });
+        parsedForRules.push({ filePath: parsed.filePath, code: parsed.code, ast: parsed.ast });
     }
     console.log(`Parsed ${results.length} files`);
     console.log('Running rules...');
-    const parsedForRules = [];
-    for (const file of files) {
-        const parsed = await parseFile(file);
-        if (parsed)
-            parsedForRules.push({ filePath: parsed.filePath, code: parsed.code, ast: parsed.ast });
-    }
     const findings = await runRules(packageRoot(), parsedForRules);
     console.log(`Found ${findings.length} findings`);
     const errors = findings.filter((f) => f.severity === 'error' || f.severity === 'critical').length;
@@ -95,7 +91,8 @@ async function analyzeProject(opts = {}) {
     await fs.ensureDir(reportDir);
     const data = {
         summary: {
-            filesScanned: results.length,
+            filesScanned: files.length,
+            filesAnalyzed: results.length,
             timeMs: Date.now() - startedAt,
             generatedAt: new Date().toISOString(),
             findings: findings.length,
@@ -148,6 +145,6 @@ async function analyzeProject(opts = {}) {
             console.log(path.join(reportDir, 'index.html'));
         }
     }
-    return { success: true, reportDir, findings: findings.length, filesScanned: results.length };
+    return { success: true, reportDir, findings: findings.length, filesScanned: files.length, filesAnalyzed: results.length };
 }
 //# sourceMappingURL=index.js.map

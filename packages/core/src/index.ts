@@ -72,21 +72,18 @@ export async function analyzeProject(opts: AnalyzeOptions = {}) {
   console.log(`Found ${files.length} files`);
 
   const results: any[] = [];
+  const parsedForRules: any[] = [];
   console.log('Parsing files...');
   for (const file of files) {
     const parsed = await parseFile(file);
     if (!parsed) continue;
     const metrics = computeMetrics(parsed.code);
     results.push({ file: file, language: parsed.language, metrics });
+    parsedForRules.push({ filePath: parsed.filePath, code: parsed.code, ast: parsed.ast });
   }
   console.log(`Parsed ${results.length} files`);
 
   console.log('Running rules...');
-  const parsedForRules: any[] = [];
-  for (const file of files) {
-    const parsed = await parseFile(file);
-    if (parsed) parsedForRules.push({ filePath: parsed.filePath, code: parsed.code, ast: parsed.ast });
-  }
   const findings = await runRules(packageRoot(), parsedForRules);
   console.log(`Found ${findings.length} findings`);
 
@@ -100,7 +97,8 @@ export async function analyzeProject(opts: AnalyzeOptions = {}) {
 
   const data = {
     summary: {
-      filesScanned: results.length,
+      filesScanned: files.length,
+      filesAnalyzed: results.length,
       timeMs: Date.now() - startedAt,
       generatedAt: new Date().toISOString(),
       findings: findings.length,
@@ -153,5 +151,5 @@ export async function analyzeProject(opts: AnalyzeOptions = {}) {
     }
   }
 
-  return { success: true, reportDir, findings: findings.length, filesScanned: results.length };
+  return { success: true, reportDir, findings: findings.length, filesScanned: files.length, filesAnalyzed: results.length };
 }
