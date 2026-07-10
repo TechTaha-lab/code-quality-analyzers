@@ -3,7 +3,13 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.analyzeProject = analyzeProject;
 const path = require('path');
 const fs = require('fs-extra');
-const open = require('open');
+let open;
+try {
+    open = require('open');
+}
+catch (err) {
+    open = null;
+}
 const { scan } = require('@code-quality/scanner');
 const { parseFile } = require('@code-quality/parser');
 const { runRules } = require('@code-quality/rule-engine');
@@ -73,8 +79,19 @@ async function analyzeProject(opts = {}) {
     console.log(path.join(reportDir, 'index.html'));
     if (shouldOpen) {
         console.log();
-        console.log('Opening browser...');
-        await open(path.join(reportDir, 'index.html'));
+        if (open && typeof open === 'function') {
+            console.log('Opening browser...');
+            try {
+                await open(path.join(reportDir, 'index.html'));
+            }
+            catch (err) {
+                console.warn('Could not open browser automatically. Report was generated successfully.');
+            }
+        }
+        else {
+            console.log('Open the generated report at:');
+            console.log(path.join(reportDir, 'index.html'));
+        }
     }
     return { success: true, reportDir };
 }

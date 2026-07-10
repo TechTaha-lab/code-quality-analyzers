@@ -22,13 +22,6 @@ npx tsc -p tsconfig.json
 npm run test
 ```
 
-## Publishing
-
-The package is configured for public npm publication. Before publishing, ensure npm authentication is available and run:
-
-```bash
-npm publish --access public
-```
 
 ## License
 

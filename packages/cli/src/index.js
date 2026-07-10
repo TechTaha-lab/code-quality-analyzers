@@ -1,7 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 const { Command } = require('commander');
-const chalk = require('chalk');
+const chalkModule = require('chalk');
+const chalk = typeof chalkModule === 'function' ? chalkModule : chalkModule.default;
 const program = new Command();
 program
     .name('code-quality-analyzer')
