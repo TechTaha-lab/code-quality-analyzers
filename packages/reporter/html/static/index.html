@@ -8,32 +8,53 @@
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
-  <div class="container">
+  <main class="container">
     <header>
-      <h1>Code Quality Report</h1>
-      <div id="meta"></div>
+      <div>
+        <p class="eyebrow">Static Analysis</p>
+        <h1>Code Quality Report</h1>
+      </div>
+      <div id="meta" class="meta"></div>
     </header>
 
     <section class="cards">
+      <div class="card">
+        <h3>Quality Score</h3>
+        <div class="score"><span id="quality-score">-</span><small>/100</small></div>
+        <p id="quality-rating">-</p>
+      </div>
       <div class="card">
         <h3>Files Scanned</h3>
         <div id="files-scanned">-</div>
       </div>
       <div class="card">
-        <h3>Findings</h3>
+        <h3>Total Findings</h3>
         <div id="findings-count">-</div>
+      </div>
+      <div class="card danger">
+        <h3>Errors</h3>
+        <div id="errors-count">-</div>
+      </div>
+      <div class="card warning">
+        <h3>Warnings</h3>
+        <div id="warnings-count">-</div>
       </div>
     </section>
 
-    <section>
-      <canvas id="severityChart" height="80"></canvas>
+    <section class="chart-panel">
+      <canvas id="severityChart" height="96"></canvas>
     </section>
 
     <section>
-      <h2>Files</h2>
+      <h2>Issues</h2>
+      <ul id="issues-list"></ul>
+    </section>
+
+    <section>
+      <h2>Analyzed Files</h2>
       <ul id="files-list"></ul>
     </section>
-  </div>
+  </main>
 
   <script src="assets/script.js"></script>
 </body>

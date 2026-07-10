@@ -1,6 +1,6 @@
 # Code Quality Analyzer
 
-Code Quality Analyzer is a lightweight monorepo for scanning source trees, parsing JavaScript and TypeScript files, applying built-in rules, and generating an HTML report.
+Code Quality Analyzer is a modular static analysis toolkit for JavaScript, TypeScript, and React projects. It scans source trees, runs built-in quality/security/type rules, computes a quality score, and generates a browser-based HTML report.
 
 ## Installation
 
@@ -17,39 +17,44 @@ npm.cmd link
 ## Usage
 
 ```powershell
-cqa.cmd analyze
+cqa.cmd analyze . --output .\code-quality-report
 ```
 
-The long command still works:
+The long command also works:
 
 ```bash
 code-quality-analyzer analyze . --output ./code-quality-report
 ```
 
-On Windows, if PowerShell cannot find `cqa`, add npm's global bin folder for the current terminal:
+Generate without opening a browser:
 
 ```powershell
-$env:Path += ";$env:APPDATA\npm"
+cqa.cmd analyze . --output .\code-quality-report --no-open
 ```
 
-Then run:
+The generated dashboard lives at `code-quality-report/index.html` and reads `code-quality-report/report.json`.
 
-```powershell
-cqa.cmd analyze
-```
+## Rules
 
-In Command Prompt, Git Bash, or terminals where PowerShell scripts are allowed, you can use `cqa analyze`.
+Built-in rules cover:
+
+- TypeScript: explicit `any`, unused variables, unused parameters, missing parameter types
+- React: missing mapped keys, missing `useEffect` dependency arrays, oversized components
+- Security: exposed secrets, `eval()` and `Function()`
+- Quality: complexity, TODO/FIXME comments, console usage
+
+See [docs/RULES.md](docs/RULES.md) for the complete rule and scoring reference.
 
 ## Development
 
-```bash
-npm install
-npx tsc -p tsconfig.json
-npm run test
+```powershell
+npm.cmd install
+npm.cmd run build
+npm.cmd run test
 ```
 
+PowerShell may block `npm.ps1` on some Windows machines. Use `npm.cmd` when that happens.
 
 ## License
 
 MIT
-

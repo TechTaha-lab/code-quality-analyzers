@@ -5,7 +5,7 @@ exports.runRules = runRules;
 const fg = require('fast-glob');
 const path = require('path');
 async function loadRulesFromPackages(rootDir) {
-    const pattern = path.join(rootDir, 'packages', 'rules', '**', '*.js');
+    const pattern = path.join(rootDir, 'packages', 'rules', '**', '*.js').replace(/\\/g, '/');
     const files = await fg(pattern, { absolute: true, dot: false });
     const rules = [];
     for (const f of files) {

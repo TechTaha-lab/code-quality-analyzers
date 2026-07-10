@@ -25,6 +25,25 @@ function computeMetrics(code: string) {
   return { lines: total, blankLines: blank, commentLines: comment, commentRatio: total === 0 ? 0 : +(comment / total).toFixed(3) };
 }
 
+function scoreFinding(finding: any) {
+  const id = finding.id || '';
+  const category = finding.category || '';
+  if (category === 'security' || finding.severity === 'critical') return 10;
+  if (id === 'no-explicit-any') return 2;
+  if (id === 'complexity') return 5;
+  if (id === 'unused-variable' || id === 'unused-parameter' || id === 'console-log' || id === 'no-console') return 1;
+  if (finding.severity === 'error') return 3;
+  if (finding.severity === 'warning') return 1;
+  return 0;
+}
+
+function ratingForScore(score: number) {
+  if (score < 50) return 'Poor';
+  if (score < 70) return 'Needs improvement';
+  if (score < 90) return 'Good';
+  return 'Excellent';
+}
+
 export async function analyzeProject(opts: AnalyzeOptions = {}) {
   const startedAt = Date.now();
   const root = opts.root || '.';
@@ -46,9 +65,18 @@ export async function analyzeProject(opts: AnalyzeOptions = {}) {
   console.log(`Parsed ${results.length} files`);
 
   console.log('Running rules...');
-  const parsedForRules = results.map((r) => ({ filePath: r.file, code: fs.readFileSync(r.file, 'utf8'), ast: null }));
+  const parsedForRules: any[] = [];
+  for (const file of files) {
+    const parsed = await parseFile(file);
+    if (parsed) parsedForRules.push({ filePath: parsed.filePath, code: parsed.code, ast: parsed.ast });
+  }
   const findings = await runRules(process.cwd(), parsedForRules);
   console.log(`Found ${findings.length} findings`);
+
+  const errors = findings.filter((f: any) => f.severity === 'error' || f.severity === 'critical').length;
+  const warnings = findings.filter((f: any) => f.severity === 'warning').length;
+  const infos = findings.filter((f: any) => f.severity === 'info').length;
+  const score = Math.max(0, 100 - findings.reduce((total: number, finding: any) => total + scoreFinding(finding), 0));
 
   const reportDir = path.resolve(output);
   await fs.ensureDir(reportDir);
@@ -59,6 +87,11 @@ export async function analyzeProject(opts: AnalyzeOptions = {}) {
       timeMs: Date.now() - startedAt,
       generatedAt: new Date().toISOString(),
       findings: findings.length,
+      errors,
+      warnings,
+      infos,
+      score,
+      rating: ratingForScore(score),
     },
     files: results,
     findings,

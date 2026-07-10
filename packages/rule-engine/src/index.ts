@@ -21,7 +21,7 @@ export interface RuleModule {
 }
 
 export async function loadRulesFromPackages(rootDir: string) {
-  const pattern = path.join(rootDir, 'packages', 'rules', '**', '*.js');
+  const pattern = path.join(rootDir, 'packages', 'rules', '**', '*.js').replace(/\\/g, '/');
   const files = await fg(pattern, { absolute: true, dot: false });
   const rules: RuleModule[] = [];
   for (const f of files) {
