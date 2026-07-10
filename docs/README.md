@@ -22,13 +22,6 @@ code-quality-report/index.html
 
 Because the report loads `report.json` with `fetch`, view it through a local static server instead of opening the file directly.
 
-## Local Development
-
-If you are working from this cloned repo before publishing, link the package once:
-
-```powershell
-npm.cmd link
-```
 
 On Windows, if PowerShell cannot find `cqa`, add npm's global bin folder for the current terminal:
 
@@ -36,11 +29,7 @@ On Windows, if PowerShell cannot find `cqa`, add npm's global bin folder for the
 $env:Path += ";$env:APPDATA\npm"
 ```
 
-Run the analyzer from PowerShell:
 
-```powershell
-cqa.cmd analyze . --output .\code-quality-report
-```
 
 In Command Prompt, Git Bash, or terminals where PowerShell scripts are allowed, you can use:
 
