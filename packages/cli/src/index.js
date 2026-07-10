@@ -1,15 +1,15 @@
+#!/usr/bin/env node
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 const { Command } = require('commander');
-const chalkModule = require('chalk');
-const chalk = typeof chalkModule === 'function' ? chalkModule : chalkModule.default;
 const program = new Command();
 program
-    .name('code-quality-analyzer')
+    .name('cqa')
     .description('CLI for Code Quality Analyzer')
-    .version('0.1.0');
+    .version('0.1.2');
 program
     .command('analyze [path]')
+    .alias('a')
     .description('Analyze a project')
     .option('--no-open', 'Do not open report')
     .option('--output <dir>', 'Output directory', './code-quality-report')
@@ -20,6 +20,10 @@ program
     const openFlag = options.open;
     const ignore = options.ignore || undefined;
     try {
+        console.log('Code Quality Analyzer');
+        console.log(`Target: ${root}`);
+        console.log(`Output: ${output}`);
+        console.log();
         // dynamic require to give friendlier errors during development when packages are not built
         let core;
         try {
@@ -32,19 +36,19 @@ program
                 core = require('../../core/src/index');
             }
             catch (err) {
-                console.error(chalk.red('Failed to load @code-quality/core. Make sure workspace packages are installed and built.'));
-                console.error(chalk.yellow('Run `npm install` at the repo root and `npm run build:all` before using the CLI.'));
+                console.error('Failed to load @code-quality/core. Make sure workspace packages are installed and built.');
+                console.error('Run `npm install` at the repo root and `npm run build:all` before using the CLI.');
                 process.exit(1);
             }
         }
         if (!core || typeof core.analyzeProject !== 'function') {
-            console.error(chalk.red('Core analyzeProject API not available.'));
+            console.error('Core analyzeProject API not available.');
             process.exit(1);
         }
         await core.analyzeProject({ root, output, open: openFlag, ignore });
     }
     catch (err) {
-        console.error(chalk.red('Analysis failed:'), err && err.message ? err.message : err);
+        console.error('Analysis failed:', err && err.message ? err.message : err);
         process.exit(1);
     }
 });

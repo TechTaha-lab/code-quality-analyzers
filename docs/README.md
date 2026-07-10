@@ -1,10 +1,23 @@
-# Code Quality Analyzer — Docs
+# Code Quality Analyzer - Docs
 
-This repository contains a modular code quality analyzer. Use the `packages/cli` to run analysis and see generated HTML reports under `code-quality-report/`.
+This repository contains a modular code quality analyzer. Use the CLI to run analysis and see generated HTML reports under `code-quality-report/`.
 
-Quick start (after installing dependencies and building):
+Installed CLI:
 
 ```bash
+cqa analyze
+```
+
+Short alias:
+
+```bash
+cqa a
+```
+
+Quick start for development:
+
+```bash
+npm install
 npm run build:all
-npm run run-sample
+npm run analyze
 ```

@@ -7,4 +7,6 @@ export interface AnalyzeOptions {
 export declare function analyzeProject(opts?: AnalyzeOptions): Promise<{
     success: boolean;
     reportDir: any;
+    findings: any;
+    filesScanned: number;
 }>;

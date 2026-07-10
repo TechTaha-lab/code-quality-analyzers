@@ -26,6 +26,7 @@ function computeMetrics(code: string) {
 }
 
 export async function analyzeProject(opts: AnalyzeOptions = {}) {
+  const startedAt = Date.now();
   const root = opts.root || '.';
   const output = opts.output || './code-quality-report';
   const shouldOpen = opts.open !== false;
@@ -44,17 +45,18 @@ export async function analyzeProject(opts: AnalyzeOptions = {}) {
   }
   console.log(`Parsed ${results.length} files`);
 
-  const reportDir = path.resolve(output);
-  await fs.ensureDir(reportDir);
-
-  // Run rules
+  console.log('Running rules...');
   const parsedForRules = results.map((r) => ({ filePath: r.file, code: fs.readFileSync(r.file, 'utf8'), ast: null }));
   const findings = await runRules(process.cwd(), parsedForRules);
+  console.log(`Found ${findings.length} findings`);
+
+  const reportDir = path.resolve(output);
+  await fs.ensureDir(reportDir);
 
   const data = {
     summary: {
       filesScanned: results.length,
-      timeMs: 0,
+      timeMs: Date.now() - startedAt,
       generatedAt: new Date().toISOString(),
       findings: findings.length,
     },
@@ -83,10 +85,9 @@ export async function analyzeProject(opts: AnalyzeOptions = {}) {
     await fs.writeFile(path.join(reportDir, 'index.html'), html, 'utf8');
   }
 
-  console.log('✔ Scan completed');
-  console.log('Report generated');
   console.log();
-  console.log(path.join(reportDir, 'index.html'));
+  console.log('Analysis complete');
+  console.log(`Report: ${path.join(reportDir, 'index.html')}`);
   if (shouldOpen) {
     console.log();
     if (open && typeof open === 'function') {
@@ -102,5 +103,5 @@ export async function analyzeProject(opts: AnalyzeOptions = {}) {
     }
   }
 
-  return { success: true, reportDir };
+  return { success: true, reportDir, findings: findings.length, filesScanned: results.length };
 }

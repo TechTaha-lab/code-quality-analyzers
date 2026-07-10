@@ -4,3 +4,4 @@ code-quality-report/
 .DS_Store
 .vscode/
 coverage/
+.npm-cache/

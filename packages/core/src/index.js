@@ -21,6 +21,7 @@ function computeMetrics(code) {
     return { lines: total, blankLines: blank, commentLines: comment, commentRatio: total === 0 ? 0 : +(comment / total).toFixed(3) };
 }
 async function analyzeProject(opts = {}) {
+    const startedAt = Date.now();
     const root = opts.root || '.';
     const output = opts.output || './code-quality-report';
     const shouldOpen = opts.open !== false;
@@ -37,15 +38,16 @@ async function analyzeProject(opts = {}) {
         results.push({ file: file, language: parsed.language, metrics });
     }
     console.log(`Parsed ${results.length} files`);
-    const reportDir = path.resolve(output);
-    await fs.ensureDir(reportDir);
-    // Run rules
+    console.log('Running rules...');
     const parsedForRules = results.map((r) => ({ filePath: r.file, code: fs.readFileSync(r.file, 'utf8'), ast: null }));
     const findings = await runRules(process.cwd(), parsedForRules);
+    console.log(`Found ${findings.length} findings`);
+    const reportDir = path.resolve(output);
+    await fs.ensureDir(reportDir);
     const data = {
         summary: {
             filesScanned: results.length,
-            timeMs: 0,
+            timeMs: Date.now() - startedAt,
             generatedAt: new Date().toISOString(),
             findings: findings.length,
         },
@@ -73,10 +75,9 @@ async function analyzeProject(opts = {}) {
         const html = `<!doctype html><html><head><meta charset="utf-8"/><title>Code Quality Report</title></head><body><pre>${JSON.stringify(data, null, 2)}</pre></body></html>`;
         await fs.writeFile(path.join(reportDir, 'index.html'), html, 'utf8');
     }
-    console.log('✔ Scan completed');
-    console.log('Report generated');
     console.log();
-    console.log(path.join(reportDir, 'index.html'));
+    console.log('Analysis complete');
+    console.log(`Report: ${path.join(reportDir, 'index.html')}`);
     if (shouldOpen) {
         console.log();
         if (open && typeof open === 'function') {
@@ -93,6 +94,6 @@ async function analyzeProject(opts = {}) {
             console.log(path.join(reportDir, 'index.html'));
         }
     }
-    return { success: true, reportDir };
+    return { success: true, reportDir, findings: findings.length, filesScanned: results.length };
 }
 //# sourceMappingURL=index.js.map

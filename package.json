@@ -23,7 +23,8 @@
   "main": "packages/cli/src/index.js",
   "types": "packages/cli/src/index.d.ts",
   "bin": {
-    "code-quality-analyzer": "packages/cli/src/index.js"
+    "code-quality-analyzer": "packages/cli/src/index.js",
+    "cqa": "packages/cli/src/index.js"
   },
   "files": [
     "packages/cli/src",
@@ -31,6 +32,8 @@
     "packages/parser/src",
     "packages/rule-engine/src",
     "packages/scanner/src",
+    "packages/rules",
+    "packages/reporter/html/static",
     "packages/examples/sample-project/src",
     "README.md",
     "LICENSE",
@@ -48,11 +51,18 @@
   "scripts": {
     "build": "npx tsc -p tsconfig.json",
     "build:all": "npm run build",
-    "analyze": "node packages/cli/dist/index.js analyze . --output ./code-quality-report",
+    "analyze": "node packages/cli/src/index.js analyze . --output ./code-quality-report --no-open",
     "run-sample": "node scripts/run-sample.js",
     "test": "node scripts/run-sample.js",
     "lint": "echo \"No linter configured yet\"",
     "publish:all": "node scripts/publish-all.js"
+  },
+  "dependencies": {
+    "@babel/parser": "^7.29.7",
+    "commander": "^10.0.0",
+    "fast-glob": "^3.2.12",
+    "fs-extra": "^11.1.1",
+    "open": "^9.0.0"
   },
   "devDependencies": {
     "@types/node": "^26.1.1",
