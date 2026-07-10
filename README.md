@@ -11,13 +11,13 @@ npm install -g code-quality-analyzers
 For local development from this cloned repo, link the package once:
 
 ```powershell
-npm.cmd link
+npm link
 ```
 
 ## Usage
 
 ```powershell
-cqa.cmd analyze . --output .\code-quality-report
+cqa analyze . --output .\code-quality-report
 ```
 
 The long command also works:
@@ -29,7 +29,7 @@ code-quality-analyzer analyze . --output ./code-quality-report
 Generate without opening a browser:
 
 ```powershell
-cqa.cmd analyze . --output .\code-quality-report --no-open
+cqa analyze . --output .\code-quality-report --no-open
 ```
 
 The generated dashboard lives at `code-quality-report/index.html` and reads `code-quality-report/report.json`.
@@ -48,12 +48,10 @@ See [docs/RULES.md](docs/RULES.md) for the complete rule and scoring reference.
 ## Development
 
 ```powershell
-npm.cmd install
-npm.cmd run build
-npm.cmd run test
+npm install
+npm run build
+npm run test
 ```
-
-PowerShell may block `npm.ps1` on some Windows machines. Use `npm.cmd` when that happens.
 
 ## License
 

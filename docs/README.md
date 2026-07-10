@@ -5,13 +5,13 @@ This repository contains a modular code quality analyzer for JavaScript, TypeScr
 ## Installed CLI
 
 ```powershell
-cqa.cmd analyze
+cqa analyze
 ```
 
 Short alias:
 
 ```powershell
-cqa.cmd a
+cqa a
 ```
 
 The report entry point is:
@@ -22,25 +22,10 @@ code-quality-report/index.html
 
 Because the report loads `report.json` with `fetch`, view it through a local static server instead of opening the file directly.
 
-
-On Windows, if PowerShell cannot find `cqa`, add npm's global bin folder for the current terminal:
-
-```powershell
-$env:Path += ";$env:APPDATA\npm"
-```
-
-
-
-In Command Prompt, Git Bash, or terminals where PowerShell scripts are allowed, you can use:
-
-```bash
-cqa analyze
-```
-
 ## Build And Verify
 
 ```powershell
-npm.cmd install
-npm.cmd run build
+npm install
+npm run build
 node packages\cli\src\index.js analyze . --output .\code-quality-report --no-open
 ```
