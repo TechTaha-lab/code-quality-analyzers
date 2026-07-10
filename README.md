@@ -8,10 +8,16 @@ Code Quality Analyzer is a lightweight monorepo for scanning source trees, parsi
 npm install -g code-quality-analyzers
 ```
 
+For local development from this cloned repo, link the package once:
+
+```powershell
+npm.cmd link
+```
+
 ## Usage
 
-```bash
-cqa analyze
+```powershell
+cqa.cmd analyze
 ```
 
 The long command still works:
@@ -20,7 +26,7 @@ The long command still works:
 code-quality-analyzer analyze . --output ./code-quality-report
 ```
 
-On Windows, if `cqa analyze` does not work because PowerShell cannot find `cqa`, run this first:
+On Windows, if PowerShell cannot find `cqa`, add npm's global bin folder for the current terminal:
 
 ```powershell
 $env:Path += ";$env:APPDATA\npm"
@@ -29,8 +35,10 @@ $env:Path += ";$env:APPDATA\npm"
 Then run:
 
 ```powershell
-cqa analyze
+cqa.cmd analyze
 ```
+
+In Command Prompt, Git Bash, or terminals where PowerShell scripts are allowed, you can use `cqa analyze`.
 
 ## Development
 
