@@ -44,6 +44,23 @@ function ratingForScore(score: number) {
   return 'Excellent';
 }
 
+function packageRoot() {
+  return path.resolve(__dirname, '..', '..', '..');
+}
+
+async function findStaticReporterDir() {
+  const candidates = [
+    path.join(process.cwd(), 'packages', 'reporter', 'html', 'static'),
+    path.join(packageRoot(), 'packages', 'reporter', 'html', 'static'),
+  ];
+
+  for (const candidate of candidates) {
+    if (await fs.pathExists(path.join(candidate, 'index.html'))) return candidate;
+  }
+
+  return null;
+}
+
 export async function analyzeProject(opts: AnalyzeOptions = {}) {
   const startedAt = Date.now();
   const root = opts.root || '.';
@@ -70,7 +87,7 @@ export async function analyzeProject(opts: AnalyzeOptions = {}) {
     const parsed = await parseFile(file);
     if (parsed) parsedForRules.push({ filePath: parsed.filePath, code: parsed.code, ast: parsed.ast });
   }
-  const findings = await runRules(process.cwd(), parsedForRules);
+  const findings = await runRules(packageRoot(), parsedForRules);
   console.log(`Found ${findings.length} findings`);
 
   const errors = findings.filter((f: any) => f.severity === 'error' || f.severity === 'critical').length;
@@ -99,11 +116,11 @@ export async function analyzeProject(opts: AnalyzeOptions = {}) {
 
   await fs.writeJson(path.join(reportDir, 'report.json'), data, { spaces: 2 });
 
-  // Copy static reporter from packages/reporter/html/static if available
-  const staticDir = path.join(process.cwd(), 'packages', 'reporter', 'html', 'static');
+  // Copy the bundled HTML reporter. The packageRoot candidate is required when
+  // the CLI is installed globally and process.cwd() is the analyzed project.
+  const staticDir = await findStaticReporterDir();
   try {
-    const exists = await fs.pathExists(staticDir);
-    if (exists) {
+    if (staticDir) {
       // copy assets to reportDir/assets
       await fs.copy(path.join(staticDir, 'assets'), path.join(reportDir, 'assets'));
       // copy index.html to report root

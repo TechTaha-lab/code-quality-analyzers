@@ -1,0 +1,101 @@
+{
+  "summary": {
+    "filesScanned": 3,
+    "timeMs": 209,
+    "generatedAt": "2026-07-10T08:51:22.144Z",
+    "findings": 6,
+    "errors": 0,
+    "warnings": 6,
+    "infos": 0,
+    "score": 94,
+    "rating": "Excellent"
+  },
+  "files": [
+    {
+      "file": "D:\\code-quality-analyzers\\packages\\examples\\sample-project\\src\\index.js",
+      "language": "javascript",
+      "metrics": {
+        "lines": 6,
+        "blankLines": 0,
+        "commentLines": 1,
+        "commentRatio": 0.167
+      }
+    },
+    {
+      "file": "D:\\code-quality-analyzers\\packages\\examples\\sample-project\\src\\util.js",
+      "language": "javascript",
+      "metrics": {
+        "lines": 7,
+        "blankLines": 0,
+        "commentLines": 1,
+        "commentRatio": 0.143
+      }
+    },
+    {
+      "file": "D:\\code-quality-analyzers\\packages\\examples\\sample-project\\code-quality-report\\assets\\script.js",
+      "language": "javascript",
+      "metrics": {
+        "lines": 20,
+        "blankLines": 5,
+        "commentLines": 0,
+        "commentRatio": 0
+      }
+    }
+  ],
+  "findings": [
+    {
+      "severity": "warning",
+      "category": "style",
+      "id": "no-console",
+      "file": "D:\\code-quality-analyzers\\packages\\examples\\sample-project\\src\\index.js",
+      "line": 4,
+      "column": 1,
+      "message": "Avoid console usage in production code"
+    },
+    {
+      "severity": "warning",
+      "category": "quality",
+      "id": "console-log",
+      "file": "D:\\code-quality-analyzers\\packages\\examples\\sample-project\\src\\index.js",
+      "line": 4,
+      "column": 1,
+      "message": "Console statement detected. Use structured logging or remove it before release."
+    },
+    {
+      "severity": "warning",
+      "category": "style",
+      "id": "no-console",
+      "file": "D:\\code-quality-analyzers\\packages\\examples\\sample-project\\src\\util.js",
+      "line": 5,
+      "column": 5,
+      "message": "Avoid console usage in production code"
+    },
+    {
+      "severity": "warning",
+      "category": "quality",
+      "id": "console-log",
+      "file": "D:\\code-quality-analyzers\\packages\\examples\\sample-project\\src\\util.js",
+      "line": 5,
+      "column": 5,
+      "message": "Console statement detected. Use structured logging or remove it before release."
+    },
+    {
+      "severity": "warning",
+      "category": "style",
+      "id": "no-console",
+      "file": "D:\\code-quality-analyzers\\packages\\examples\\sample-project\\code-quality-report\\assets\\script.js",
+      "line": 16,
+      "column": 14,
+      "message": "Avoid console usage in production code"
+    },
+    {
+      "severity": "warning",
+      "category": "quality",
+      "id": "console-log",
+      "file": "D:\\code-quality-analyzers\\packages\\examples\\sample-project\\code-quality-report\\assets\\script.js",
+      "line": 16,
+      "column": 14,
+      "message": "Console statement detected. Use structured logging or remove it before release."
+    }
+  ]
+}
